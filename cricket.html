@@ -34,7 +34,12 @@
   </div>
   
   <script>
-    
+    let score = {
+      win: 0,
+      lost: 0,
+      tie: 0,
+    };
+
      function generateComputerChoice()
      {
       let computerChoice;
@@ -58,43 +63,59 @@
       if(userMove==='Bat')
       {
       if(computerMove==='Bat'){
+        score.tie++;
       return `It's a Tie`;
       }else if(computerMove==='Stump')
       {
+        score.lost++;
       return 'Computer has won';
       }
       else if(computerMove==='Ball')
       {
-      return 'You won';
+        score.win++;
+      return 'You has won';
     }
       }
       else if(userMove==='Ball')
       {
         if(computerMove==='Ball'){
+          score.tie++;
         return `It's a Tie`;
         }
         else if(computerMove==='Stump')
         {
+          score.win++;
         return 'You has won';
         }
         else if(computerMove==='Bat')
         {
+          score.lost++;
         return 'Computer has won';
         }
       }else{
         if(computerMove==='Stump')
         {
+          score.tie++;
         return `It's a Tie`;
         }else if(computerMove==='Bat')
        {
+        score.win++;
       return 'You has won';
        }
       else if(computerMove==='Ball'){
+        score.lost++;
       return 'Computer has won';}
       }
     }
     function showResult(userMove,computerChoice,resultMsg){
-      alert(`You choice is ${userMove} , Computer choice is ${computerChoice} and ${resultMsg}`);
+      alert(`You choice is ${userMove} , Computer choice is ${computerChoice} and
+      
+      ${resultMsg}
+      
+      Won : ${score.win}
+      Lost : ${score.lost}
+      Tie : ${score.tie}`);
+      
     }
   </script>
 </body>
