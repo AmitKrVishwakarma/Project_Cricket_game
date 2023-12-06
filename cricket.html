@@ -4,46 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cricket Game</title>
-  <style>
-    body {
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="cricket.css">
+ 
 </head>
 <body>
 
   <div>
     <h1>Bat Ball Stump Game</h1>
-    <button onclick="
+    <button class="choice-button" onclick="
     let computerChoice = generateComputerChoice();
     let resultMsg=getResult('Bat',computerChoice );
     showResult('Bat',computerChoice,resultMsg);
-    ">Bat</button>
+    "><img src="image\bat-png-565075.png" alt="Bat_image" class="choice-image"> </button>
 
-    <button onclick=" computerChoice = generateComputerChoice();
+         
+
+    <button class="choice-button" onclick=" computerChoice = generateComputerChoice();
     resultMsg=getResult('Ball',computerChoice );
     showResult('Ball',computerChoice,resultMsg);
-   ">Ball</button>
+   "><img src="image\ball.png" alt="Ball_image" class="choice-image"> </button>
 
 
-    <button onclick=" computerChoice = generateComputerChoice();
+    <button class="choice-button" onclick=" computerChoice = generateComputerChoice();
     resultMsg=getResult('Stump',computerChoice );
     showResult('Stump',computerChoice,resultMsg);
-     ">Stump</button>
+     "><img src="image\stump.png" alt="stump_image" class="choice-image"> </button>
 
-  </div>
   
+  </div>
+   <h5 id="user-move"></h5>
+   <h5 id="comuter-move"></h5>
+   <h5 id="result"></h5>
+   <h5 id="score"></h5>
+   <button onclick="localStorage.clear(); resetScore();">Reset</button>
   <script>
-    let score = {
+    let socreStr = localStorage.getItem('Score');
+    let score; 
+    resetScore(socreStr); 
+
+     function resetScore(socreStr){
+      score= socreStr ? JSON.parse(socreStr) :  {
       win: 0,
       lost: 0,
       tie: 0,
-      displayScore: function(){
-        return ` Won : ${score.win}
-       Lost : ${score.lost}
-       Tie : ${score.tie}`;
-      }
+      
     };
+    score.displayScore = function(){
+        return `Score: Won : ${score.win}  Lost : ${score.lost}  Tie : ${score.tie}`;
+    };
+
+    showResult();
+     }
 
      function generateComputerChoice()
      {
@@ -113,12 +124,14 @@
       }
     }
     function showResult(userMove,computerChoice,resultMsg){
-      alert(`You choice is ${userMove} , Computer choice is ${computerChoice} and
-      
-      ${resultMsg}
-      
-      ${score.displayScore()}`)
-    }
+      localStorage.setItem('Score',JSON.stringify(score));
+
+      document.querySelector('#user-move').innerText=userMove !== undefined ? `You have chosen ${userMove} `: null;
+      document.querySelector('#comuter-move').innerText=computerChoice !== undefined ?`Computer choice ${computerChoice} `:null;
+      document.querySelector('#result').innerText=resultMsg !== undefined ?`${resultMsg}`:null;
+      document.querySelector('#score').innerText=score.displayScore();
+
+    };
   </script>
 </body>
 </html>
